@@ -99,9 +99,9 @@ class CDOMgr(object):
             cdo = cls(*args, **kwargs)
             if hasattr(cdo, 'init'):
                 cdo.init(*args, **kwargs)
-            ret = self._save_cdo(cdo)
-            if not ret:
-                return None
+            # ret = self._save_cdo(cdo)
+            # if not ret:
+            #     return None
         self.cdo_pool[cls.__name__] = cdo
         return self._clone(self.cdo_pool[cls.__name__])
 
@@ -113,7 +113,7 @@ class CDOMgr(object):
         for item in CDOMgr.WARM_UP_LIST:
             if isinstance(item, type):
                 print('尝试预热CDO: ' + item.__name__)
-                cdo = self.create(item)
+                cdo = self._load_cdo(item)
                 if cdo is None:
                     print('CDO预热失败: ' + item.__name__)
                 else:
